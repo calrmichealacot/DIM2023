@@ -15,9 +15,11 @@
         <td><%= post.action %></td>
         <td></td>
         <td>
-          <%= link_to 'Show', post_path(post),class: 'bi bi-eye' %>
-          <%= link_to 'Edit', edit_post_path(post),class: 'bi bi-pen' %>
-          <%= button_to 'Delete', post_path(post), method: :delete,class: 'bi bi-trash'%>
+          <%= link_to '', post_path(post),class: 'bi bi-eye' %>
+          <%= link_to '', edit_post_path(post),class: 'bi bi-pen' %>
+          <%= button_to '', post_path(post), method: :delete,class: 'bi bi-trash'%>
+          <%= link_to '', post_comments_path(post),class:'bi bi-chat-left-dots-fill' %>
+          <%= link_to '', new_post_comment_path(post),class:'bi bi-chat-left-text' %>
         </td>
         <td>
         </td>
