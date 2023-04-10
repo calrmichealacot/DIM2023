@@ -9,6 +9,7 @@
     <td>action</td>
     <td>category</td>
     <td>comments count</td>
+    <td>image</td>
     </thead>
     <% @posts.each do |post| %>
       <tr>
@@ -19,6 +20,8 @@
         <td><%= post.user&.email %></td>
         <td><%= post.categories.pluck(:name).join(',') %></td>
         <td><%= post.comments_count %></td>
+        <td><%= image_tag post.image.url if post.image.present? %></td>
+
         <td></td>
         <td>
           <%= link_to '', post_path(post),class: 'bi bi-eye' %>
@@ -33,5 +36,5 @@
     <% end %>
   </table>
 </div>
-
+<%= paginate @posts %>
 <%= link_to 'New', new_post_path,class:'btn btn-success' %>
