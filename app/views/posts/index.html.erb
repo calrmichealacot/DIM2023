@@ -1,0 +1,29 @@
+<h1 class="text-center">POST LIST</h1>
+<div class="d-flex flex-column justify-content-center">
+  <table class="table table-striped table bordered table-hover text-center">
+    <thead>
+    <td>title</td>
+    <td>content</td>
+    <td>address</td>
+    <td>action</td>
+    </thead>
+    <% @posts.each do |post| %>
+      <tr>
+        <td><%= post.title %></td>
+        <td><%= post.content %></td>
+        <td><%= post.address %></td>
+        <td><%= post.action %></td>
+        <td></td>
+        <td>
+          <%= link_to 'Show', post_path(post),class: 'bi bi-eye' %>
+          <%= link_to 'Edit', edit_post_path(post),class: 'bi bi-pen' %>
+          <%= button_to 'Delete', post_path(post), method: :delete,class: 'bi bi-trash'%>
+        </td>
+        <td>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+
+<%= link_to 'New', new_post_path,class:'btn btn-success' %>
