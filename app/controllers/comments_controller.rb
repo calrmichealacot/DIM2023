@@ -29,7 +29,7 @@ class CommentsController < ApplicationController
     if @comment.update(comment_params)
       redirect_to post_comments_path(@post)
     else
-      render :edit
+      render :edit,status: :unprocessable_entity
     end
   end
 

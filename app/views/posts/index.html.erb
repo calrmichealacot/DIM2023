@@ -1,15 +1,43 @@
-<h1 class="text-center">POST LIST</h1>
-<div class="d-flex flex-column justify-content-center">
+<header>
+  <h2>POST LIST</h2>
+</header>
+<div class="d-flex flex-column justify-content-center" ,>
+  <style>
+      * {
+          box-sizing: border-box;
+      }
+
+      body {
+          font-family: Arial, Helvetica, sans-serif;
+      }
+
+      header {
+          background-color: #666;
+          padding: 30px;
+          text-align: center;
+          font-size: 35px;
+          color: white;
+      }
+      table, th, td {
+          border: 3px solid black;
+          border-collapse: collapse;
+      }
+      th, td {
+          background-color: #96D4D4;
+      }
+</style>
   <table class="table table-striped table bordered table-hover text-center">
     <thead>
-    <td>user</td>
-    <td>title</td>
-    <td>content</td>
-    <td>address</td>
-    <td>action</td>
-    <td>category</td>
-    <td>comments count</td>
-    <td>image</td>
+
+    <td>USER</td>
+    <td>TITLE</td>
+    <td>CONTENT</td>
+    <td>ADDRESS</td>
+    <td>ACTION</td>
+    <td>CATEGORY</td>
+    <td>COMMENTS COUNTS</td>
+    <td>IMAGE</td>
+    <td>LOCATION</td>
     </thead>
     <% @posts.each do |post| %>
       <tr>
@@ -21,14 +49,14 @@
         <td><%= post.categories.pluck(:name).join(',') %></td>
         <td><%= post.comments_count %></td>
         <td><%= image_tag post.image.url if post.image.present? %></td>
-
+        <td><%= Geocoder.search(post.ip_address).first&.country %></td>
         <td></td>
         <td>
-          <%= link_to '', post_path(post),class: 'bi bi-eye' %>
-          <%= link_to 'Edit', edit_post_path(post),class: 'bi bi-eye' if user_signed_in? && post.user == current_user %>
-           <%= button_to 'Delete', post_path(post),class: 'bi bi-trash', method: :delete if user_signed_in? && post.user == current_user %>
-          <%= link_to '', post_comments_path(post),class:'bi bi-chat-left-dots-fill' %>
-          <%= link_to '', new_post_comment_path(post),class:'bi bi-chat-left-text' %>
+          <%= link_to 'Show', post_path(post), class: 'btn btn-primary' %>
+          <%= link_to 'Edit', edit_post_path(post),class: 'btn btn-primary' if policy(post).edit?%>
+          <%= button_to 'Delete', post_path(post),class: 'btn btn-danger', method: :delete if policy(post).destroy? %>
+          <%= link_to 'Post Comment', post_comments_path(post), class: 'btn btn-warning' %>
+          <%= link_to 'React', new_post_comment_path(post), class: 'btn btn-dark' %>
         </td>
         <td>
         </td>
@@ -36,5 +64,6 @@
     <% end %>
   </table>
 </div>
+
 <%= paginate @posts %>
-<%= link_to 'New', new_post_path,class:'btn btn-success' %>
+<%= link_to 'New', new_post_path, class: 'btn btn-success' %>
