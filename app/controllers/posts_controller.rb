@@ -24,7 +24,9 @@ class PostsController < ApplicationController
     else
       @post.ip_address = request.remote_ip
     end
-
+    @post.country_code = Geocoder.search(post.ip_address).first.country
+    @post.country = Geocoder.search(post.country_code).first.country
+    @post.isp =Geocoder.search(@post.ip_address).first.data["org"]
     if @post.save
       redirect_to posts_path
     else
@@ -44,6 +46,7 @@ class PostsController < ApplicationController
   def destroy
     authorize @post, :destroy?, policy_class: PostPolicy
     @post.destroy
+    flash[:notice] ='You cant delete the post, that has comments'
     redirect_to posts_path
   end
 

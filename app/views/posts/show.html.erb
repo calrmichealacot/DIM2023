@@ -3,10 +3,8 @@
 <ul>
   <li><%= @post.title %></li>
   <li><%= @post.content %></li>
-  <li><%= @post.address %></li>
-  <li><%= @post.action %></li>
   <li><%= @post.user&.email %></li>
-  <li><%= @post.category%></li>
+
 </ul>
 </table>
 <%= link_to 'Index', posts_path %>
