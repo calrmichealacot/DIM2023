@@ -44,7 +44,7 @@ class PostsController < ApplicationController
   def destroy
     authorize @post, :destroy?, policy_class: PostPolicy
     @post.destroy
-    flash[:notice] ='You cant delete the post, that has comments'
+    flash[:notice] = 'You cant delete the post, that has comments'
     redirect_to posts_path
   end
 
@@ -58,5 +58,11 @@ class PostsController < ApplicationController
     params.require(:post).permit(:title, :content, :address, :action, :image, category_ids: [])
   end
 
+  def validate_post_owner
+    unless @post.user == current_user
+      flash[:notice] = 'the post not belongs to you'
+      redirect_to posts_path
+    end
+  end
 end
 
