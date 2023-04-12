@@ -15,8 +15,8 @@
     <td>COMMENTS COUNTS</td>
     <td>IMAGE</td>
     <td>LOCATION</td>
-    <td></td>
-    <td></td>
+    <td>IP</td>
+    <td>ISP</td>
     <td></td>
     </thead>
     <% @posts.each do |post| %>
@@ -30,15 +30,14 @@
         <td><%= post.comments_count %></td>
         <td><%= image_tag post.image.url if post.image.present? %></td>
         <td><%= Geocoder.search(post.ip_address).first&.country %></td>
-        <td></td>
+        <td><%= @ip_address = Post.last.ip_address %></td>
+        <td><%= Geocoder.search(@ip_address).first.data["org"] %></td>
         <td>
           <%= link_to 'Show', post_path(post), class: 'btn btn-primary' %>
           <%= link_to 'Edit', edit_post_path(post),class: 'btn btn-primary' if policy(post).edit?%>
           <%= button_to 'Delete', post_path(post),class: 'btn btn-danger', method: :delete if policy(post).destroy? %>
           <%= link_to 'Post Comment', post_comments_path(post), class: 'btn btn-warning' %>
           <%= link_to 'React', new_post_comment_path(post), class: 'btn btn-dark' %>
-        </td>
-        <td>
         </td>
       </tr>
     <% end %>
